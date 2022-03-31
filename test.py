@@ -23,7 +23,7 @@ def DFT(x): #ndarray
 
     e = np.exp(-2j * np.pi * k * n / N)
     print("e: ", e)
-    print '--------------'
+    print ("--------------")
     print("e.size: ", e.size)
 
     return np.dot(e, x)
@@ -43,8 +43,8 @@ def plotFFT():
     # print("--------")
     # print("value at time [x]: " , s)
 
-    # plt.plot(t, s)
-    # plt.show()
+    plt.plot(t, s)
+    plt.show()
 
     fft = np.fft.fft(s)
 
@@ -68,14 +68,65 @@ def plotFFT():
     plt.bar(f[:N //2],                 #X - frequencies
         np.abs(fft)[:N // 2] * 1 / N    #Y - 1 / N is a normalization factor
         , width=5)                      #width of the bar
+    plt.show()
+
+def plotFFT3hz():
+
+    t = np.linspace(0, 2, 2000) #from 0 seconds, to 2 seconds, with 2000 sampling points
+    # t = [0.001 for i in range(2000)] 
+    # i = 0
+
+    # j = 0
+    # while j < 2000:
+    #     i += 0.001
+    #     t[j] = i
+    #     j+=1
+
+
+    s = (np.sin(3 * 2 * np.pi * t - 1.571) +1)  #+ (np.sin(5 * 2 * np.pi * t - 1.571) + 1) # sin wave where we derive the values from the samples
+
+    #----------------------------
+    # plt.xlabel("Time [s]")
+    # plt.ylabel("Amplitude")
+    # plt.plot(t, s)
     # plt.show()
+    #----------------------------
+
+    fft = np.fft.fft(s)
+
+    T = t[1] - t[0]  # sampling STEP interval 
+
+    N = s.size
+
+    oneDivByT = 1 / T
+    # oneDivByT = 999.5
+
+
+    f = np.linspace(0, oneDivByT, N) #start at zero, goes up to 999.5, and takes 2000 steps
+
+    xfreq = f[0:20] #takes the 20 first elements of F
+
+    npabs_fft_ = np.abs(fft)
+
+    yAmpli = npabs_fft_[0:20] * 1 / N 
+
+    plt.ylabel("Amplitude")
+    plt.xlabel("Frequency [Hz]")
+
+    plt.bar(xfreq,                 #X - frequencies
+        yAmpli    #Y - 1 / N is a normalization factor
+        , width=1)                      #width of the bar
+    plt.show()    
+
+    varbusydebug =2
 
 
 def main():
     # myArray = np.linspace(0, 0.5, 20000)
     # result = DFT(myArray)
     # print(result)
-    plotFFT()
+    # plotFFT()
+    plotFFT3hz()
 
 if __name__ == "__main__":
     main()
