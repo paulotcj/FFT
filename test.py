@@ -9,14 +9,13 @@ def AbsoluteValueForComplexNumbers(input):
     for x in range(0,input.size):
         returnObject[x] = math.sqrt( input[x].real**2 + input[x].imag**2 )
 
-    #debugwait = 2
     return returnObject
     
 
 def DiscreteFourierTransform(values):
     print("DiscreteFourierTransform")
     numberOfSamples = values.size
-    NegativePiDivBy4 = -math.pi/4
+    NegativePiDivBy4 = -math.pi*2/numberOfSamples
 
     returnObject = np.array([0 + 0j] * values.size) #declarying an array of complex numbers
 
@@ -25,9 +24,9 @@ def DiscreteFourierTransform(values):
     complexNumber = 0 + 0j
 
     for k in range(0,numberOfSamples):
-        print("k: ",k)
+        # print("k: ",k)
         for n in range(0,numberOfSamples):
-            print("    n: ",n)
+            # print("    n: ",n)
             #we use value at index n
             value = values[n]
             expValue = NegativePiDivBy4 * k * n
@@ -39,9 +38,9 @@ def DiscreteFourierTransform(values):
             sumImag += valTimesSin
         complexNumber = complex(sumReal,sumImag)
         returnObject[k] = complexNumber
-        print("        sumReal: ",sumReal) 
-        print("        sumImag: ",sumImag)
-        print("        complexNumber: ",complexNumber)
+        # print("        sumReal: ",sumReal) 
+        # print("        sumImag: ",sumImag)
+        # print("        complexNumber: ",complexNumber)
         
         sumReal = 0
         sumImag = 0
@@ -54,8 +53,20 @@ def FullFourierTransformWithGraph():
     print("Discrete FT")
     #-----
     # Set up input data
-    timeSpan = np.linspace(0, 0.875, 8) #from 0 seconds, to 0.875 seconds, with 8 sampling points
-    values = np.cos(2 * np.pi * timeSpan - 1.571) 
+
+    # FYI: in case you see me multiplying numbers below, it's just because I am experimenting; either trying to extend the time, increase the sampling points, etc
+    timeSpan = np.linspace(0, 0.875*5, 8*5*32) #from 0 seconds, to 0.875 seconds, with 8 sampling points
+
+    # timeSpan = np.linspace(0, 3.1, 32) # just testing
+
+    values = (
+          np.cos(     2 * np.pi * timeSpan - 1.571) 
+        + np.cos(13 * 2 * np.pi * timeSpan - 1.571)
+        + np.cos(7  * 2 * np.pi * timeSpan - 1.571)
+        + np.cos(15 * 2 * np.pi * timeSpan - 1.571)
+    )
+
+    # values = np.cos(2 * np.pi * timeSpan) # just testing
 
     #-----
     # Set up internal variables
@@ -103,14 +114,9 @@ def FullFourierTransformWithGraph():
     plt.show()        
     #-----
 
-    debugwait = 2
+    debugBreakPointWait = 0
 
 def main():
-    # myArray = np.linspace(0, 0.5, 20000)
-    # result = DFT(myArray)
-    # print(result)
-    # plotFFT()
-    # plotFFT3hz()
     FullFourierTransformWithGraph()
 
 if __name__ == "__main__":
