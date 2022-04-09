@@ -48,10 +48,6 @@ def DiscreteFourierTransform(values):
             sumImag += valTimesSin
         complexNumber = complex(sumReal,sumImag)
         returnObject[k] = complexNumber
-        # print("        sumReal: ",sumReal) 
-        # print("        sumImag: ",sumImag)
-        # print("        complexNumber: ",complexNumber)
-        
         sumReal = 0
         sumImag = 0
         
