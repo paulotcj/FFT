@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+# input is an array of complex numbers. We take the real and imaginary part and apply the absolute value of the complex number to
+#   each of the elements of the array
+#   -> SQRT(A^2 + B^2)
 def AbsoluteValueForComplexNumbers(input):
     print("AbsoluteValueForComplexNumbers")
     returnObject = np.array([0.0] * input.size)
@@ -12,10 +15,16 @@ def AbsoluteValueForComplexNumbers(input):
     return returnObject
     
 
+# This is the discrete Fourier transform. The Fast Fourier Transform performs better, but I am doing from scratch for learning
+#   purposes
+#   Continuous 'Fourier Transform' :  X(F) = ∫[∞,-∞] x(t) * e^(-j*2*π*F.t) * dt
+#   Discrte 'Fourier Transform'    :  Xk = SUM[n=0,N-1] xn  * e^((-j*2*π*k*n)/N) * dt
+#      k/N ~ F 
+#      n ~ t
 def DiscreteFourierTransform(values):
     print("DiscreteFourierTransform")
     numberOfSamples = values.size
-    NegativePiDivBy4 = -math.pi*2/numberOfSamples
+    NegativePiDivBySamples = -math.pi*2/numberOfSamples
 
     returnObject = np.array([0 + 0j] * values.size) #declarying an array of complex numbers
 
@@ -29,7 +38,8 @@ def DiscreteFourierTransform(values):
             # print("    n: ",n)
             #we use value at index n
             value = values[n]
-            expValue = NegativePiDivBy4 * k * n
+            expValue = NegativePiDivBySamples * k * n
+            # Euler's Formula: e^(j*x) = cos x + j * sin x
             _cos = math.cos(expValue)
             _sin = math.sin(expValue)
             valTimesCos = value * _cos
